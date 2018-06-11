@@ -6,7 +6,7 @@ const passport = require('passport');
 // Load profile model
 const Profile = require('../../models/Profile');
 
-// Load User Profile
+// Load User model
 const User = require('../../models/User');
 
 // Load Validation
@@ -246,6 +246,71 @@ router.post('/education', passport.authenticate('jwt', { session: false }), (req
             profile.education.unshift(newEdu);
 
             profile.save().then((profile) => res.json(profile));
+        });
+});
+
+// @route   DELETE /api/profile/experience
+// @desc    Delete experience from profile
+// @access  Private
+router.delete('/experience/:exp_id', passport.authenticate('jwt', { session: false }), (req, res) => {
+    Profile.findOne({ user: req.user.id })
+        .then((profile) => {
+            // Initialize errors object
+            const errors = {};
+
+            // remove experience with the id that user is requesting
+            const updatedExperience = profile.experience
+                .filter((experience) => !(experience.id === req.params.exp_id));
+            
+            // Only make a request to the database if data was actually changed
+            if (updatedExperience.length !== profile.experience.length) {
+                // Update the array of experiences with the new
+                profile.experience = updatedExperience;
+
+                // update database with new experience array
+                profile.save().then((profile) => res.json(profile));
+            } else {
+                res.status(400).send();
+            }
+        })
+        .catch((e) => res.status(404).json(err));
+});
+
+// @route   DELETE /api/profile/education
+// @desc    Delete education from profile
+// @access  Private
+router.delete('/education/:edu_id', passport.authenticate('jwt', { session: false }), (req, res) => {
+    Profile.findOne({ user: req.user.id })
+        .then((profile) => {
+            // Initialize errors object
+            const errors = {};
+
+            // remove education object with the id that user is requesting
+            const updatedEducation = profile.education
+                .filter((education) => !(education.id === req.params.edu_id));
+            
+            // Only make a request to the database if data was actually changed
+            if (updatedEducation.length !== profile.education.length) {
+                // Update the array education with the updated one
+                profile.education = updatedEducation;
+
+                // update database with new education array
+                profile.save().then((profile) => res.json(profile));
+            } else {
+                res.status(400).send();
+            }
+        })
+        .catch((e) => res.status(404).json(err));
+});
+
+// @route   DELETE /api/profile/
+// @desc    Delete user and profile
+// @access  Private
+router.delete('/', passport.authenticate('jwt', { session: false }), (req, res) => {
+    Profile.findOneAndRemove({ user: req.user.id })
+        .then(() => {
+            User.findOneAndRemove({ _id: req.user.id })
+                .then(() => res.json({ success: true }));
         });
 });
 
