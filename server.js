@@ -8,7 +8,7 @@ const profile = require('./routes/api/profile');
 const posts = require('./routes/api/posts');
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 
 // Body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
