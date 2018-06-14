@@ -12,11 +12,25 @@ class Register extends Component {
             errors: {}
         };
         this.onInputChange = this.onInputChange.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
     }
     onInputChange(e) {
         this.setState({
             [e.target.name]: e.target.value
         });
+    }
+    onSubmit(e) {
+        e.preventDefault();
+        const { name, email, password, password2 } = this.state;
+
+        const newUser = {
+            name,
+            email,
+            password,
+            password2
+        };
+        
+        console.log(newUser);
     }
     render() {
         return (
@@ -26,7 +40,7 @@ class Register extends Component {
                         <div className="col-md-8 m-auto">
                             <h1 className="display-4 text-center">Sign Up</h1>
                             <p className="lead text-center">Create your DevConnector account</p>
-                            <form action="create-profile.html">
+                            <form onSubmit={this.onSubmit}>
                                 <div className="form-group">
                                     <input 
                                         type="text" 
