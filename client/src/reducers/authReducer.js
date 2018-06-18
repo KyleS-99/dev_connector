@@ -13,7 +13,7 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 isAuthenticated: !isEmpty(action.payload),
-                user: !isEmpty(action.payload) ? action.payload : {}
+                user: action.payload
             };
         default:
             return state;

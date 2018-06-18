@@ -24,6 +24,11 @@ class Register extends Component {
             this.setState({errors: this.props.errors});
         }
     }
+    componentWillMount() {
+        if (this.props.auth.isAuthenticated) {
+            this.props.history.push('/dashboard');
+        }
+    }
     onInputChange(e) {
         this.setState({
             [e.target.name]: e.target.value
