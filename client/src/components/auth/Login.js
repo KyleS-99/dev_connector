@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import propTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom';
+import propTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import { loginUser } from '../../actions/authActions';
 import TextFieldGroup from '../common/TextFieldGroup';
@@ -98,4 +97,4 @@ const mapStateToProps = (state) => ({
     errors: state.errors
 });
 
-export default connect(mapStateToProps, { loginUser })(withRouter(Login));
+export default connect(mapStateToProps, { loginUser })(Login);
