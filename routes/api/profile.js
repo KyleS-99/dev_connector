@@ -30,7 +30,7 @@ router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => 
 
             res.json(profile);
         })
-        .catch((e) => res.status(404).json(err));
+        .catch((e) => res.status(404).json(e));
 });
 
 // @route   GET /api/profile/all
