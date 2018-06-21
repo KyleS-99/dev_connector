@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 import setAuthToken from './utils/setAuthToken';
 import { setCurrentUser, logoutUser } from './actions/authActions';
@@ -13,6 +13,7 @@ import Landing from './components/layout/Landing';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import Dashboard from './components/dashboard/Dashboard';
+import PrivateRoute from './components/common/PrivateRoute';
 
 import './App.css';
 
@@ -47,9 +48,22 @@ class App extends Component {
 						<Route path="/" exact={true} component={Landing} />
 
 						<div className="container">
-							<Route exact={true} path="/register" component={Register} />
-							<Route exact={true} path="/login" component={Login} />
-							<Route exact={true} path="/dashboard" component={Dashboard} />
+							<Route 
+								exact={true} 
+								path="/register" 
+								component={Register} 
+							/>
+							<Route 
+								exact={true} 
+								path="/login" 
+								component={Login} 
+							/>
+							<Switch>
+								<PrivateRoute 
+									exact={true} path="/dashboard" 
+									component={Dashboard} 
+								/>
+							</Switch>
 						</div>
 
 						<Footer />
