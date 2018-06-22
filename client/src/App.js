@@ -47,7 +47,11 @@ class App extends Component {
 				<BrowserRouter>
 					<div className="App">
 						<Navbar />
-						<Route path="/" exact={true} component={Landing} />
+						<Route 
+							path="/" 
+							exact={true} 
+							component={Landing} 
+						/>
 
 						<div className="container">
 							<Route 
