@@ -6,6 +6,7 @@ import TextFieldGroup from '../common/TextFieldGroup';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup'; 
 import InputGroup from '../common/InputGroup'; 
 import SelectListGroup from '../common/SelectListGroup'; 
+import { createProfile } from '../../actions/profileActions';
 
 class CreateProfile extends Component {
     constructor(props) {
@@ -32,10 +33,47 @@ class CreateProfile extends Component {
         this.onInputChange = this.onInputChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
+    componentDidUpdate(prevProps) {
+        if (prevProps.errors !== this.props.errors) {
+            this.setState({ errors: this.props.errors });
+        }
+    }
     onSubmit(e) {
         e.preventDefault();
 
-        console.log(e);
+        const { 
+            handle, 
+            company, 
+            website, 
+            location, 
+            status,
+            skills,
+            githubusername,
+            bio,
+            twitter,
+            facebook,
+            linkedin,
+            youtube,
+            instagram
+        } = this.state;
+
+        const profileData = {
+            handle, 
+            company, 
+            website, 
+            location, 
+            status,
+            skills,
+            githubusername,
+            bio,
+            twitter,
+            facebook,
+            linkedin,
+            youtube,
+            instagram
+        };
+
+        this.props.createProfile(profileData, this.props.history);
     }
     onInputChange(e) {
         this.setState({
@@ -165,7 +203,7 @@ class CreateProfile extends Component {
                                     value={this.state.skills}
                                     onChange={this.onInputChange}
                                     error={errors.skills}
-                                    info="Please use comma sparated values (eg. HTML,CSS,JavaScript,NodeJS,PHP"
+                                    info="Please use comma sparated values (eg. HTML,CSS,JavaScript,NodeJS,PHP)"
                                 />
                                 <TextFieldGroup
                                     placeholder="Github Username"
@@ -185,11 +223,15 @@ class CreateProfile extends Component {
                                 />
 
                                 <div className="mb-3">
-                                    <button className="btn btn-light" onClick={() => {
-                                        this.setState({
-                                            displaySocialInputs: !this.state.displaySocialInputs
-                                        })
-                                    }}>
+                                    <button 
+                                        className="btn btn-light" 
+                                        type="button"
+                                        onClick={() => {
+                                            this.setState({
+                                                displaySocialInputs: !this.state.displaySocialInputs
+                                            })
+                                        }}
+                                    >
                                         Add Social Network Links
                                     </button>
                                     <span className="text-muted">Optional</span>
@@ -217,4 +259,4 @@ const mapStateToProps = (state) => ({
     errors: state.errors
 });
 
-export default connect(mapStateToProps)(CreateProfile);
+export default connect(mapStateToProps, { createProfile })(CreateProfile);
