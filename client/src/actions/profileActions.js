@@ -34,6 +34,19 @@ export const createProfile = (profileData, history) => (dispatch) => {
         );
 };
 
+// Add users job experience
+export const addExperience = (expData, history) => (dispatch) => {
+    axios
+        .post('/api/profile/experience', expData)
+        .then(() => history.push('/dashboard'))
+        .catch((err) => 
+            dispatch({
+                type: GET_ERRORS,
+                payload: err.response.data
+            })
+        );
+};
+
 // Delete account & profile
 export const deleteAccount = () => (dispatch) => {
     if (window.confirm('Are you sure you want to delete your account? This can NOT be undone!')) {

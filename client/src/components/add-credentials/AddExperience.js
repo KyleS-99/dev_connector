@@ -5,7 +5,8 @@ import PropTypes from 'prop-types';
 
 import TextFieldGroup from '../common/TextFieldGroup';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
-
+import { addExperience } from '../../actions/profileActions';
+import { SSL_OP_NETSCAPE_CA_DN_BUG } from 'constants';
 
 class AddExperience extends Component {
     constructor(props) {
@@ -26,11 +27,45 @@ class AddExperience extends Component {
         this.onInputChange = this.onInputChange.bind(this);
         this.onCheck = this.onCheck.bind(this);
     }
-    onSubmit() {
+    componentDidUpdate(prevProps) {
+        if (prevProps.errors !== this.props.errors) {
+            this.setState({
+                errors: this.props.errors
+            });
+        }
+    }
+    onSubmit(e) {
+        e.preventDefault();
 
+        let {
+            company,
+            title,
+            location,
+            from,
+            to,
+            current,
+            description
+        } = this.state;
+
+        // Check to see if user set to even though they still work there currently
+        current ? to = '' : to = to;
+        
+        const expData = {
+            company,
+            title,
+            location,
+            from,
+            to,
+            current,
+            description
+        };
+
+        this.props.addExperience(expData, this.props.history);
     }
     onInputChange(e) {
-
+        this.setState({
+            [e.target.name]: e.target.value
+        });
     }
     onCheck() {
         this.setState({
@@ -125,7 +160,8 @@ class AddExperience extends Component {
 
 AddExperience.propTypes = {
     profile: PropTypes.object.isRequired,
-    errors: PropTypes.object.isRequired
+    errors: PropTypes.object.isRequired,
+    addExperience: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -133,4 +169,4 @@ const mapStateToProps = (state) => ({
     errors: state.errors
 });
 
-export default connect(mapStateToProps)(AddExperience);
+export default connect(mapStateToProps, { addExperience })(AddExperience);
