@@ -113,7 +113,7 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
     profileFields.user = req.user.id;
     profileFields.social = {};
 
-    const whiteList = ['handle', 'company', 'website', 'bio', 'status', 'githubusername', 'skills', 'youtube', 'twitter', 'instagram', 'facebook', 'linkedin'];
+    const whiteList = ['handle', 'company', 'location', 'website', 'bio', 'status', 'githubusername', 'skills', 'youtube', 'twitter', 'instagram', 'facebook', 'linkedin'];
     const inputData = Object.keys(req.body); 
 
     for (key of inputData) {
