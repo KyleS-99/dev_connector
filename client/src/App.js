@@ -17,6 +17,7 @@ import Register from './components/auth/Register';
 import Dashboard from './components/dashboard/Dashboard';
 import CreateProfile from './components/create-profile/CreateProfile';
 import EditProfile from './components/edit-profile/EditProfile';
+import AddExperience from './components/add-credentials/AddExperience';
 
 import './App.css';
 
@@ -48,6 +49,7 @@ class App extends Component {
 				<BrowserRouter>
 					<div className="App">
 						<Navbar />
+
 						<Route 
 							path="/" 
 							exact={true} 
@@ -67,24 +69,34 @@ class App extends Component {
 							/>
 							<Switch>
 								<PrivateRoute 
-									exact={true} path="/dashboard" 
+									exact={true} 
+									path="/dashboard" 
 									component={Dashboard} 
 								/>
 							</Switch>
 							<Switch>
 								<PrivateRoute 
-									exact={true} path="/create-profile" 
+									exact={true} 
+									path="/create-profile" 
 									component={CreateProfile} 
 								/>
 							</Switch>
 							<Switch>
 								<PrivateRoute 
-									exact={true} path="/edit-profile" 
+									exact={true} 
+									path="/edit-profile" 
 									component={EditProfile} 
 								/>
 							</Switch>
+							<Switch>
+								<PrivateRoute 
+									exact={true} 
+									path="/add-experience" 
+									component={AddExperience} 
+								/>
+							</Switch>
 						</div>
-
+						
 						<Footer />
 					</div>
 				</BrowserRouter>

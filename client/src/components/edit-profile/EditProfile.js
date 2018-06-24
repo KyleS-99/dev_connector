@@ -63,7 +63,7 @@ class EditProfile extends Component {
                 showOptions = true;
             }
 
-            // Set component fields state
+            // Set component fields in state
             this.setState({
                 company,
                 website,
