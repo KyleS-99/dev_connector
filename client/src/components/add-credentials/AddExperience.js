@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 import TextFieldGroup from '../common/TextFieldGroup';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 import { addExperience } from '../../actions/profileActions';
-import { SSL_OP_NETSCAPE_CA_DN_BUG } from 'constants';
 
 class AddExperience extends Component {
     constructor(props) {
@@ -48,7 +47,9 @@ class AddExperience extends Component {
         } = this.state;
 
         // Check to see if user set to even though they still work there currently
-        current ? to = '' : to = to;
+        if (current) {
+            to = '';
+        }
         
         const expData = {
             company,
