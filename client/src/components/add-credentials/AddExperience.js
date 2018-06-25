@@ -110,7 +110,7 @@ class AddExperience extends Component {
                                     onChange={this.onInputChange}
                                     error={errors.location}
                                 />
-                                <h6>From Date</h6>
+                                <h6>* From Date</h6>
                                 <TextFieldGroup 
                                     name="from"
                                     type="date"
