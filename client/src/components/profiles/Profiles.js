@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import Spinner from '../common/Spinner';
 import { getProfiles } from '../../actions/profileActions';
+import Spinner from '../common/Spinner';
+import ProfileItem from './ProfileItem';
 
 class Profiles extends Component {
     componentDidMount() {
@@ -13,11 +14,14 @@ class Profiles extends Component {
         const { profiles, loading } = this.props.profile;
         let profileItems;
 
+        // Display spinner while profiles are being fetched
         if (profiles === null || loading) {
             profileItems = <Spinner />
         } else if (profiles.length > 0) {
-            profileItems = <h1>TODO DISPLAY PROFILES</h1>
+            // Display individual profiles
+            profileItems = profiles.map((profile) => <ProfileItem key={profile._id} profile={profile} /> );
         } else {
+            // No one has created a profile yet
             profileItems = <h4>No profiles found...</h4>
         }
 
