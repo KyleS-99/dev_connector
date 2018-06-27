@@ -2,6 +2,10 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const passport = require('passport');
+const axios = require('axios');
+
+// Load github configurations
+const { clientId, clientSecret } = require('../../config/keys');
 
 // Load profile model
 const Profile = require('../../models/Profile');
@@ -312,6 +316,20 @@ router.delete('/', passport.authenticate('jwt', { session: false }), (req, res) 
             User.findOneAndRemove({ _id: req.user.id })
                 .then(() => res.json({ success: true }));
         });
+});
+
+// @route   GET /api/profile/githubusername/:username
+// @desc    Get users github repos
+// @access  Public
+router.get('/githubusername/:username', (req, res) => {
+    const count = 5;
+    const sort = 'created: asc';
+
+    axios.get(`https://api.github.com/users/${req.params.username}/repos?per_page=${count}&sort=${sort}&client_id=${clientId}&client_secret=${clientSecret}`)
+            .then((response) => {
+                res.json({ repos: response.data })
+            })
+            .catch(() => res.status(404).json({ notfound: 'Github user not found' }));
 });
 
 module.exports = router;
