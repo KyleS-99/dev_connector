@@ -122,7 +122,7 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
                 profileFields[key] = req.body.skills.split(',');
             } else if (['youtube', 'twitter', 'instagram', 'facebook'].includes(key) && req.body[key]) {
                 profileFields.social[key] = req.body[key];
-            } else if (req.body[key]) {
+            } else if (req.body[key] || req.body[key] === '') {
                 profileFields[key] = req.body[key];
             }
         }
