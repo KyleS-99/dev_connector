@@ -18,7 +18,7 @@ class ProfileGithub extends Component {
         // If user doesn't exist then set the error in state
         axios.get(`/api/profile/githubusername/${username}`)
             .then((res) => {
-                if (this.githubContainer) {
+                if (this.refs.myRef) {
                     this.setState({ repos: res.data.repos })
                 }
             })
@@ -57,7 +57,7 @@ class ProfileGithub extends Component {
         ));
 
         return (
-            <div ref={(element) => {this.githubContainer = element}}>
+            <div ref="myRef">
                 <hr />
                 <h3 className="mb-4">Latest Github Repos</h3>
                 {repoItems}

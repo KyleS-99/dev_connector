@@ -17,7 +17,7 @@ class Profile extends Component {
         }
     }
     componentDidUpdate() {
-        if (this.props.profile.profile === null && this.props.profile.loading) {
+        if (this.props.profile.profile === null && this.props.profile.loading === false) {
             this.props.history.push('/not-found');
         }
     }
