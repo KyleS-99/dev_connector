@@ -16,7 +16,12 @@ class Profile extends Component {
             this.props.getProfileByHandle(this.props.match.params.handle);
         }
     }
-    componentDidUpdate() {
+    componentDidUpdate(prevProps) {
+        // If user logs out while on route redirect them
+        if (this.props.profile.profile === null && prevProps.profile.profile !== null) {
+            return this.props.history.push('/login');
+        }
+
         if (this.props.profile.profile === null && this.props.profile.loading === false) {
             this.props.history.push('/not-found');
         }
