@@ -4,15 +4,19 @@ import { connect } from 'react-redux';
 
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 import { addPost } from '../../actions/postActions';
+import { getCurrentProfile } from "../../actions/profileActions";
+import isEmpty from '../../validation/is-empty';
 
 class PostForm extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.state = {
             text: '',
             errors: {}
         };
+        
+        this.props.getCurrentProfile();
         this.onInputChange = this.onInputChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
@@ -25,15 +29,19 @@ class PostForm extends Component {
         e.preventDefault();
 
         const { user } = this.props.auth;
+        const { profile } = this.props.profile;
 
         const newPost = {
             text: this.state.text,
-            name: user.name,
+            name: !isEmpty(profile.handle) ? profile.handle : user.name,
             avatar: user.avatar
         };
 
         this.props.addPost(newPost);
-        this.setState({ text: '' });
+        
+        if (this.state.text.length > 10) {
+            this.setState({ text: '' });
+        }
     }
     componentDidUpdate(prevProps) {
         if (prevProps.errors !== this.props.errors) {
@@ -72,12 +80,15 @@ class PostForm extends Component {
 PostForm.propTypes = {
     errors: PropTypes.object.isRequired,
     auth: PropTypes.object.isRequired,
-    addPost: PropTypes.func.isRequired
+    profile: PropTypes.object.isRequired,
+    addPost: PropTypes.func.isRequired,
+    getCurrentProfile: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
     errors: state.errors,
-    auth: state.auth
+    auth: state.auth,
+    profile: state.profile
 });
 
-export default connect(mapStateToProps, { addPost })(PostForm);
+export default connect(mapStateToProps, { addPost, getCurrentProfile })(PostForm);

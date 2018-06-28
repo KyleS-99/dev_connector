@@ -4,15 +4,18 @@ import { connect } from 'react-redux';
 
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 import { addComment } from '../../actions/postActions';
+import { getCurrentProfile } from "../../actions/profileActions";
+import isEmpty from '../../validation/is-empty';
 
 class CommentForm extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.state = {
             text: '',
             errors: {}
         };
+        this.props.getCurrentProfile();
         this.onInputChange = this.onInputChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
@@ -26,15 +29,19 @@ class CommentForm extends Component {
 
         const { postId } = this.props;
         const { user } = this.props.auth;
+        const { profile } = this.props.profile;
 
         const newComment = {
             text: this.state.text,
-            name: user.name,
+            name: !isEmpty(profile.handle) ? profile.handle : user.name,
             avatar: user.avatar
         };
 
         this.props.addComment(postId, newComment);
-        this.setState({ text: '' });
+        
+        if (this.state.text.length > 10) {
+            this.setState({ text: '' });
+        }
     }
     componentDidUpdate(prevProps) {
         if (prevProps.errors !== this.props.errors) {
@@ -73,13 +80,16 @@ class CommentForm extends Component {
 CommentForm.propTypes = {
     errors: PropTypes.object.isRequired,
     auth: PropTypes.object.isRequired,
+    profile: PropTypes.object.isRequired,
     postId: PropTypes.string.isRequired,
-    addComment: PropTypes.func.isRequired
+    addComment: PropTypes.func.isRequired,
+    getCurrentProfile: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
     errors: state.errors,
-    auth: state.auth
+    auth: state.auth,
+    profile: state.profile
 });
 
-export default connect(mapStateToProps, { addComment })(CommentForm);
+export default connect(mapStateToProps, { addComment, getCurrentProfile })(CommentForm);
