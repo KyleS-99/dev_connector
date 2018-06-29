@@ -6,26 +6,93 @@ import { setCurrentUser, logoutUser } from './actions/authActions';
 import { clearCurrentProfile } from './actions/profileActions';
 import { Provider } from 'react-redux';
 import store from './store';
+import Loadable from 'react-loadable';
 
 import PrivateRoute from './components/common/PrivateRoute';
 
+import Spinner from './components/common/Spinner';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
-import Landing from './components/layout/Landing';
-import Login from './components/auth/Login';
-import Register from './components/auth/Register';
-import Dashboard from './components/dashboard/Dashboard';
-import CreateProfile from './components/create-profile/CreateProfile';
-import EditProfile from './components/edit-profile/EditProfile';
-import AddExperience from './components/add-credentials/AddExperience';
-import AddEducation from './components/add-credentials/AddEducation';
-import Profiles from './components/profiles/Profiles';
-import Profile from './components/Profile/Profile';
-import Posts from './components/posts/Posts';
-import Post from './components/post/Post';
-import NotFound from './components/not-found/NotFound';
 
 import './App.css';
+
+const Landing = Loadable({
+	loader: () => import('./components/layout/Landing'),
+	loading: Spinner,
+	delay: 500
+});
+
+const Login = Loadable({
+	loader: () => import('./components/auth/Login'),
+	loading: Spinner,
+	delay: 500
+});
+
+const Register = Loadable({
+	loader: () => import('./components/auth/Register'),
+	loading: Spinner,
+	delay: 500
+});
+
+const Dashboard = Loadable({
+	loader: () => import('./components/dashboard/Dashboard'),
+	loading: Spinner,
+	delay: 500
+});
+
+const CreateProfile = Loadable({
+	loader: () => import('./components/create-profile/CreateProfile'),
+	loading: Spinner,
+	delay: 500
+});
+
+const EditProfile = Loadable({
+	loader: () => import('./components/edit-profile/EditProfile'),
+	loading: Spinner,
+	delay: 500
+});
+
+const AddExperience = Loadable({
+	loader: () => import('./components/add-credentials/AddExperience'),
+	loading: Spinner,
+	delay: 500
+});
+
+const AddEducation = Loadable({
+	loader: () => import('./components/add-credentials/AddEducation'),
+	loading: Spinner,
+	delay: 500
+});
+
+const Profiles = Loadable({
+	loader: () => import('./components/profiles/Profiles'),
+	loading: Spinner,
+	delay: 500
+});
+
+const Profile = Loadable({
+	loader: () => import('./components/Profile/Profile'),
+	loading: Spinner,
+	delay: 500
+});
+
+const Posts = Loadable({
+	loader: () => import('./components/posts/Posts'),
+	loading: Spinner,
+	delay: 500
+});
+
+const Post = Loadable({
+	loader: () => import('./components/post/Post'),
+	loading: Spinner,
+	delay: 500
+});
+
+const NotFound = Loadable({
+	loader: () => import('./components/not-found/NotFound'),
+	loading: Spinner,
+	delay: 500
+});
 
 // Check for token
 if (localStorage.jwtToken) {
