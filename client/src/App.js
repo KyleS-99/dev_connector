@@ -123,11 +123,13 @@ class App extends Component {
 					<div className="App">
 						<Navbar />
 
-						<Route 
-							path="/" 
-							exact={true} 
-							component={Landing} 
-						/>
+						<Switch>
+							<Route 
+								path="/" 
+								exact={true} 
+								component={Landing} 
+							/>
+						</Switch>
 						
 						<div className="container">
 							<Switch>
