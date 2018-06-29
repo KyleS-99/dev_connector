@@ -122,14 +122,12 @@ class App extends Component {
 				<BrowserRouter>
 					<div className="App">
 						<Navbar />
-
-						<Switch>
-							<Route 
-								path="/" 
-								exact={true} 
-								component={Landing} 
-							/>
-						</Switch>
+				
+						<Route 
+							path="/" 
+							exact={true} 
+							component={Landing} 
+						/>
 						
 						<div className="container">
 							<Switch>
@@ -178,7 +176,6 @@ class App extends Component {
 									path="/post/:id" 
 									component={Post} 
 								/>
-								<Route component={NotFound} />
 							</Switch>
 						</div>
 						
